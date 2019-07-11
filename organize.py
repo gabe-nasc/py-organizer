@@ -43,6 +43,12 @@ def create_folders(path):
         new_path = os.path.join(path, folder)
         os.mkdir(new_path)
 
+def move_files(path, cfiles):
+    for folder, files in cfiles.items():
+        for f in files:
+            os.rename(os.path.join(path, f), os.path.join(path, folder, f))
+
+
 def main():
     if len(sys.argv) < 2:
         path = os.getcwd()
@@ -58,6 +64,8 @@ def main():
     file_names = find_files(path)
     cf = categorize(file_names)
     create_folders(path)
+    move_files(path, cf)
+    print(len(file_names), "files were moved.")
 
 if __name__ == "__main__":
     main()

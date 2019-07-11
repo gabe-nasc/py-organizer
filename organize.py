@@ -38,6 +38,11 @@ def categorize(files):
     
     return categorized_files
 
+def create_folders(path):
+    for folder in ["Executables","Images", "Audio", "Video", "Code", "Docs", "Unknown"]:
+        new_path = os.path.join(path, folder)
+        os.mkdir(new_path)
+
 def main():
     if len(sys.argv) < 2:
         path = os.getcwd()
@@ -52,6 +57,7 @@ def main():
 
     file_names = find_files(path)
     cf = categorize(file_names)
+    create_folders(path)
 
 if __name__ == "__main__":
     main()

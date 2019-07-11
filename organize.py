@@ -36,10 +36,10 @@ def categorize(files):
         else:
             categorized_files["Unknown"].append(file)
     
-    return categorized_files
+    return {key:value for key, value in categorized_files.items() if len(value) > 0}
 
-def create_folders(path):
-    for folder in ["Executables","Images", "Audio", "Video", "Code", "Docs", "Unknown"]:
+def create_folders(path, keys):
+    for folder in keys:
         new_path = os.path.join(path, folder)
         os.mkdir(new_path)
 
@@ -59,11 +59,11 @@ def main():
         print("ERROR: Path does not exist")
         exit()
 
-    print("Files for: ", path)
+    print("Files for:", path)
 
     file_names = find_files(path)
     cf = categorize(file_names)
-    create_folders(path)
+    create_folders(path, cf.keys())
     move_files(path, cf)
     print(len(file_names), "files were moved.")
 
